@@ -13,7 +13,7 @@ dy = [0, -1, 0, 1]
 
 def BFS(x, y):
     global answer
-    q = set([(x, y, board[x][y])])
+    q = {(x, y, board[x][y])}
 
     while q:
         x, y, ans = q.pop()
@@ -73,7 +73,7 @@ def my_solve(ny,nx, val):
         temp_x = nx + dx[i]
         if 0 <= temp_y < y and 0 <= temp_x < x and arr[temp_y][temp_x] in st:
             st.remove(arr[temp_y][temp_x])
-            solve(temp_y, temp_x, val+1)
+            my_solve(temp_y, temp_x, val+1)
             st.add(arr[temp_y][temp_x])
 
 
