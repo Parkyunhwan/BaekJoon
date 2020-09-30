@@ -39,3 +39,38 @@ for val in range(1 << (a * b)):
         sm += seq
     mx = max(mx, sm)
 print(mx)
+
+# bitmask
+
+n, m = map(int, input().split())
+arr = [list(map(int, list(input()))) for _ in range(n)]
+k = 0
+mx = -1
+while k < (1 << (n*m)):
+    sm = 0
+    # 가로 - 0
+    for i in range(n):
+        caro = 0
+        for j in range(m):
+            if (1 << i*m+j) & k == 0:
+                caro = caro*10 + arr[i][j]
+            else:
+                sm += caro
+                caro = 0
+        sm += caro
+
+    # 세로 - 1
+    for j in range(m):
+        sero = 0
+        for i in range(n):
+            if (1 << i*m+j) & k > 0:
+                sero = sero*10 + arr[i][j]
+            else:
+                sm += sero
+                sero = 0
+        sm += sero
+
+    mx = max(mx, sm)
+    k += 1
+
+print(mx)
