@@ -51,7 +51,7 @@ def bfs():
                 else:
                     nbx -= dx[i]
                     nby -= dy[i]
-            if not check[nrx][nry][nbx][nby]:
+            if not check[nrx][nry][nbx][nby]:  # 레드, 블루가 완전히 똑같은 경우가 있었는지 확인하기 위해서
                 check[nrx][nry][nbx][nby] = True
                 q.appendleft(((nbx, nby), (nrx, nry), d+1))
     print(-1)
