@@ -53,3 +53,39 @@ while lp < len_ls and rp >= 0:
 
 # 1 빼야함 왜? --> (조합의 특징) 공..
 print(ans-1 if s == 0 else ans)
+
+###################33###################33###################33###################33
+# 부분수열의 합 딕셔너리 버전 위 보다 느림..
+
+from itertools import combinations
+n, s = map(int, input().split())
+arr = list(map(int, input().split()))
+
+left, right = arr[:n//2], arr[n//2:]
+
+l_sum, r_sum = dict(), dict()
+count = 0
+for i in range(n//2+1):
+    cm = combinations(left, i)
+    for c in cm:
+        sm = sum(c)
+        if l_sum.get(sm):
+            l_sum[sm] += 1
+        else:
+            l_sum[sm] = 1
+
+for i in range(n - n//2 + 1):
+    cm = combinations(right, i)
+    for c in cm:
+        sm = sum(c)
+        if r_sum.get(sm):
+            r_sum[sm] += 1
+        else:
+            r_sum[sm] = 1
+
+result = 0
+for dic in l_sum:
+    if r_sum.get(s-dic):
+        result += r_sum[s-dic] * l_sum[dic]
+
+print(result - 1 if s == 0 else result)
