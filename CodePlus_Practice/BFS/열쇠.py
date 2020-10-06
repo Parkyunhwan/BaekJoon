@@ -38,11 +38,13 @@ def BFS():
                 count += 1
             elif 'A' <= arr[nx][ny] <= 'Z':
                 if not mykeys[ord(arr[nx][ny])-ord('A')]:
+                #  if not arr[nx][ny].lower() in mykeys:
                     kdeq[ord(arr[nx][ny]) - ord('A')].append((nx, ny))
                     continue
             elif 'a' <= arr[nx][ny] <= 'z':
                 d = kdeq[ord(arr[nx][ny])-ord('a')]
                 mykeys[ord(arr[nx][ny])-ord('a')] = True
+                #  mykeys.add(arr[nx][ny])
                 while d:
                     q.append(d.popleft())
             q.append((nx, ny))
@@ -57,6 +59,7 @@ for _ in range(n):
     for _ in range(h):
         arr.append('.'+stdin.readline().strip()+'.')
     arr.append('.'*(w+2))
+    # mykeys = set(list(input()))
     mykeys = [False] * 26
     k = input()
     if k != '0':
