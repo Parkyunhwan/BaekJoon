@@ -107,3 +107,47 @@ bfs()
 #                 back[i][j] = back[i + 1][j]
 #                 back[i + 1][j] = tmp
 #                 q.append((back, i + 1, j, count + 1))
+
+#  모든 경우의 수를 표현할 수 있어야한다. 즉 -> 123456789의 순서로 방문을 표시해야한다.
+#  왼오위아래
+
+#  두번째 시도 성공..!
+from collections import deque
+
+
+def BFS(sx, sy, ch):
+    q = deque()
+    q.append((sx, sy, ch, 0))
+
+    while q:
+        tx, ty, ch, count = q.popleft()
+        if "123456789" == ch:
+            return count
+        for dx, dy in (-1, 0), (1, 0), (0, -1), (0, 1):
+            nx, ny = tx + dx, ty + dy
+            if 0 <= nx < 3 and 0 <= ny < 3:
+                a = list(ch)
+                tmp = a[tx*3 + ty]
+                a[tx*3 + ty] = a[nx*3 + ny]
+                a[nx*3 + ny] = tmp
+                c = ''.join(a)
+                if not dict_check.get(c):
+                    dict_check[c] = 1
+                    q.append((nx, ny, c, count+1))
+    return -1
+
+
+arr = [input().split() for _ in range(3)]
+check = []
+start_x, start_y = 0, 0
+dict_check = dict()
+for i in range(3):
+    for j in range(3):
+        if arr[i][j] == '0':
+            arr[i][j] = '9'
+            start_x = i
+            start_y = j
+        check.append(arr[i][j])
+check = ''.join(check)
+dict_check[check] = 1
+print(BFS(start_x, start_y, check))
