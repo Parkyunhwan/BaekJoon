@@ -9,6 +9,69 @@
 #  Check 배열을 방문 마다 Check 해두면 열쇠를 찾고도 방문하지 못하지 않을까?
 #  -->(answer) : 열쇠가 없더라도 방문 Check를 해두고 알파벳 큐에 넣어 방문예약을 해두면 열쇠를 찾았을 때만 방문이 가능하게 할 수 있다.
 
+#  두 번째 풀이
+#  다중 데크 선언을 위해선 for 문 사용 해야함 [deque() for _ in range(26)]
+from sys import stdin
+from collections import deque
+t = int(input())
+
+
+dx = (-1, 1, 0, 0)
+dy = (0, 0, -1, 1)
+
+
+def BFS():
+    count = 0
+    check = [[False]*(w+2) for _ in range(h+2)]
+    q = deque()
+    tempq = [deque() for _ in range(26)]
+    q.append((0, 0))
+    check[0][0] = True
+    while q:
+        x, y = q.popleft()
+        for k in range(4):
+            nx, ny = x + dx[k], y + dy[k]
+            if nx < 0 or nx >= h+2 or ny < 0 or ny >= w+2:
+                continue
+            elif arr[nx][ny] == '*' or check[nx][ny]:
+                continue
+            check[nx][ny] = True
+            if 'A' <= arr[nx][ny] <= 'Z':
+                alpha_num = ord(arr[nx][ny]) - ord('A')
+                if not alpha[alpha_num]:
+                    tempq[alpha_num].append((nx, ny))
+                else:
+                    q.append((nx, ny))
+            elif 'a' <= arr[nx][ny] <= 'z':
+                alpha_num = ord(arr[nx][ny]) - ord('a')
+                alpha[alpha_num] = True
+                while tempq[alpha_num]:
+                    q.append(tempq[alpha_num].popleft())
+                q.append((nx, ny))
+            elif arr[nx][ny] == '$':
+                count += 1
+                q.append((nx, ny))
+            else:
+                q.append((nx, ny))
+    return count
+
+for _ in range(t):
+    alpha = [False]*26
+    h, w = map(int, input().split())
+    arr = [list('.'*(w+2))]
+    for _ in range(h):
+        arr.append(list('.'+stdin.readline().strip()+'.'))
+    arr.append(list('.'*(w+2)))
+    al = list(input())
+    if al[0] == '0':
+        pass
+    else:
+        for a in al:
+            alpha[ord(a)-ord('a')] = True
+    print(BFS())
+
+###########################__________________________________________________________#######################
+# 첫 풀이 ( 인터넷 참고 )
 from sys import stdin
 from collections import deque
 
