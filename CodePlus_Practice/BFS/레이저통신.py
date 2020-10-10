@@ -1,6 +1,9 @@
 #  그냥 방향 꺽을 때 거울을 썻다 라고 표시..? (우선순위큐사용)
 #  맞긴 맞는데 우선순위큐로 풀 수 없다. 방문 check에서 꼬임
-#  https://yabmoons.tistory.com/125 (나와 가장 비슷한 풀이) 갱신이 안되면 큐에 넣지 않는 것이 Check배열이라고 볼 수 있다.
+#  https://yabmoons.tistory.com/125 (나와 가장 비슷한 풀이) 갱신이 안되면 큐에 넣지 않는 것이 Check 배열이라고 볼 수 있다.
+
+# 몇번 꺽었는가가 가장 중요한 포인트이다. 몇번 움직였는지는 중요하지 않다.
+# 그러므로 적게 꺽은 수일 수록 큐의 앞에 위치 해야만 한다. 몇번 움직였는지는 전혀 중요치 않다.
 
 from sys import stdin
 from collections import deque
