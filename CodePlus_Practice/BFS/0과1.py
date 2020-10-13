@@ -26,3 +26,34 @@ for _ in range(int(input())):
 # 100, 101, 110, 111 = 15, 16, 8, 9
 # 1001, 1000, 1010, 1011, 1100, 1101, 1110, 1111 = (1011) 8, 1101 13
 # 11011
+
+# 굉장히 쉽지만 생각하기는 까다로운 문제
+# 두 가지를 생각해내야 했다.
+# 1. 1과 0만으로 이루어진 숫자를 어떻게 구성해서 검사할 것인가?
+# -> 1과 0 두 개를 선택하는 BFS를 통해 값을 늘려간다.
+# 2. 길면 2^100개 까지 갈 수 있는데 이것을 어떤 방식으로 방지 할 것인가?
+# -> 어떤 수에서 나머지가 같다는 것은
+from collections import deque
+t = int(input())
+arr =[]
+
+
+def bfs(val):
+    q = deque()
+    check = [False]*(val+1)
+    q.append(1)
+    while q:
+        p = q.popleft()
+        for k in (0, 1):
+            np = p * 10 + k
+            if np % val == 0:
+                print(np)
+                return
+            else:
+                if not check[np % val]:
+                    check[np % val] = True
+                    q.append(np)
+    print("BRAK")
+for _ in range(t):
+    val = int(input())
+    bfs(val)
