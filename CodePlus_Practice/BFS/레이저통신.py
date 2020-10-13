@@ -4,35 +4,38 @@
 
 # 몇번 꺽었는가가 가장 중요한 포인트이다. 몇번 움직였는지는 중요하지 않다.
 # 그러므로 적게 꺽은 수일 수록 큐의 앞에 위치 해야만 한다. 몇번 움직였는지는 전혀 중요치 않다.
-
-from sys import stdin
+#  어떤 것의 최솟값을 구할 것인가??? -> 설치해야하는 거울의 최솟값 -> dist의 원소
 from collections import deque
-input = stdin.readline
 
-w, h = map(int, input().split())
-a = [list(input().strip()) for _ in range(h)]
-dist = [[0]*w for _ in range(h)]
-q = deque()
-ex, ey = -1, 0
+dx = (-1, 1, 0, 0)
+dy = (0, 0, -1, 1)
 
-def bfs():
-    while q:
-        x, y = q.popleft()
-        for dx, dy in (-1, 0), (1, 0), (0, -1), (0, 1):
-            nx, ny = x+dy, y+dy
-            while 0 <= nx < h and 0 <= ny < w and a[nx][ny] != '*':
-                if not dist[nx][ny]:
-                    dist[nx][ny] = dist[nx][ny] + 1
-                    q.append((nx, ny))
-                nx, ny = nx+dx, ny+dy
 
+def BFS(sx, sy):
+        q = deque()
+        q.append((sx, sy))
+        while q:
+            x, y = q.popleft()
+            for k in range(4):
+                nx, ny = x + dx[k], y + dy[k]
+                # 다른 BFS와 다른 부분
+                while 0 <= nx < h and 0 <= ny < w and arr[nx][ny] != '*':
+                    if not dist[nx][ny]:
+                        dist[nx][ny] = dist[x][y] + 1  # x, y 의 값에 1을 더한 것이다.
+                        q.append((nx, ny))
+                    nx, ny = nx + dx[k], ny + dy[k]
+
+
+
+w, h =map(int, input().split())
+arr = [list(input()) for _ in range(h)]
+dist = [[0] * w for _ in range(h)]
+#  C의 위치 확인
+c_pos = []
 for i in range(h):
     for j in range(w):
-        if a[i][j] == 'C':
-            if ex == -1:
-                ex, ey = i, j
-            else:
-                q.append((i, j))
+        if arr[i][j] == 'C':
+            c_pos.append((i, j))
 
-bfs()
-print(dist[ex][ey]-1)
+BFS(c_pos[0][0], c_pos[0][1])
+print(dist[c_pos[1][0]][c_pos[1][1]]-1)
