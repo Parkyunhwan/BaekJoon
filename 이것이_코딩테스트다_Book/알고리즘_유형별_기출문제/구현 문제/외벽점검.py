@@ -1,3 +1,5 @@
+# 1회차 -> x : 너무 어려움, 아예 이해 못함
+
 from itertools import permutations
 
 

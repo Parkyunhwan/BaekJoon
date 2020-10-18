@@ -1,3 +1,4 @@
+# 1회차 -> 맞음
 from collections import deque
 n = int(input()) # 보드 크기
 k = int(input()) # 사과 개수

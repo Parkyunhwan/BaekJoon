@@ -1,3 +1,4 @@
+# 다시 x
 # Facebook 인터뷰
 mystr = list(input())
 alpha = []
