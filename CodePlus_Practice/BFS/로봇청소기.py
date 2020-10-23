@@ -1,10 +1,81 @@
 # --> 틀린 코드... 지금 위치에서 가장 가까운 거리를 선택한다고 해도
-# --> 전체 거리에서 가장 가까운 거리를 보장하지 않는다.. ( 가장 중요 )
+# --> 전체 거리에서 가장 가까운 거리를 보장하지 않는다.. ( 가장 중요!! )
 # --> 즉, 각자의 최적값의 합이 전체 최적값을 보장하지 않는다.
 # 1. 로봇의 위치에서 쓰레기의 위치를 기록한다.
 # 2. 로봇으로부터 쓰레기의 거리를 구한다.
 # 3. 쓰레기 간 거리를 구한다.
 # 4. 순열로 가능한 모든 경로를 구하고 거리를 다 더해서 최솟값을 출력한다.
+
+# 3회차 시 -> 성공
+from collections import deque
+from itertools import permutations
+dx = [1, -1, 0, 0]
+dy = [0, 0, -1, 1]
+
+
+def bfs(sx, sy):
+    q = deque()
+    q.append((sx, sy))
+    dist = [[-1]*w for _ in range(h)]
+    dist[sx][sy] = 0
+    while q:
+        tx, ty = q.popleft()
+        for k in range(4):
+            nx, ny = tx + dx[k], ty + dy[k]
+            if nx < 0 or nx >= h or ny < 0 or ny >= w or arr[nx][ny] == 'x' or dist[nx][ny] != -1:
+                continue
+            else:
+                dist[nx][ny] = dist[tx][ty] + 1
+                q.append((nx, ny))
+    return dist
+
+
+while True:
+    w, h = map(int, input().split())
+    if w == 0 and h == 0:
+        break
+    arr = [list(input()) for _ in range(h)]
+
+    # 로봇 위치와 쓰레기 위치 파악
+    robot = []
+    trash = []
+    for i in range(h):
+        for j in range(w):
+            if arr[i][j] == 'o':
+                robot.append((i, j))
+            elif arr[i][j] == '*':
+                trash.append((i, j))
+
+    r2t = bfs(robot[0][0], robot[0][1])
+
+    flag = False
+    for t in trash:
+        if r2t[t[0]][t[1]] == -1:
+            print(-1)
+            flag = True
+            break
+    if flag:
+        continue
+
+    t2t = []
+    for t in trash:
+        t2t.append(bfs(t[0], t[1]))
+
+    mn = int(1e9)
+    li = [x for x in range(len(trash))]
+    for per in list(permutations(li, len(trash))):
+        first = per[0]
+        x, y = trash[first][0], trash[first][1]
+        distance = r2t[x][y]
+        prev = first
+        for i in range(1, len(per)):
+            index = per[i]
+            x, y = trash[index][0], trash[index][1]
+            distance += t2t[prev][x][y]
+            prev = index
+        mn = min(mn, distance)
+
+    print(mn)
 
 #  https://chldkato.tistory.com/66
 from collections import deque

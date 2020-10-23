@@ -6,6 +6,61 @@
 # 위의 식에 단지 '벽이 3개가 선택되었을 때 "바이러스가 퍼진 후" 0의 갯수를 반환받는다 로 바뀐 것이다.
 # 하지만 우리는 바이러스가 퍼진 후의 연구소로 계속해서 실험할 수 없기 때문에 바이러스가 퍼지기 전의 상황을 기억해둔다.
 
+# 2회차 => 품
+n, m = map(int, input().split())
+ar = [list(map(int, input().split())) for _ in range(n)]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+mx = 0
+
+
+def virus_dfs(a, sx, sy):
+    h = len(a)
+    w = len(a[0])
+    for k in range(4):
+        nx, ny = sx + dx[k], sy + dy[k]
+        if nx < 0 or nx >= h or ny < 0 or ny >= w:
+            continue
+        elif a[nx][ny] != 0:
+            continue
+        else:
+            a[nx][ny] = 2
+            virus_dfs(a, nx, ny)
+    return
+
+
+def count_safe(ar):
+    sm = 0
+    for a in ar:
+        sm += a.count(0)
+    return sm
+
+
+def solution(index, arr):
+    global mx
+    h = len(arr)
+    w = len(arr[0])
+    if index == 3:
+        back = [a[:] for a in arr]
+        for i in range(h):
+            for j in range(w):
+                if arr[i][j] == 2:
+                    virus_dfs(back, i, j)
+        mx = max(count_safe(back), mx)
+        return
+
+    for i in range(h):
+        for j in range(w):
+            if arr[i][j] == 0:
+                arr[i][j] = 1
+                solution(index+1, arr)
+                arr[i][j] = 0
+
+
+solution(0, ar)
+print(mx)
+
+############################3
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
 mx = -1
