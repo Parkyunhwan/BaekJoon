@@ -57,7 +57,16 @@ for i in range(1, n+1):
         L[index] = a[i]
         P[i] = index+1
 
-print(P)
-print(L)
-backtrace(n, len(L)) # 경로
+# print(P)
+# print(L)
 print(len(L))
+mx = len(L)
+lst = []
+for i in range(n, 0, -1):
+    if mx == P[i]:
+        mx -= 1
+        lst.append(a[i])
+lst.reverse()
+for i in lst:
+    print(i, end=" ")
+#backtrace(n, len(L)) # 경로
