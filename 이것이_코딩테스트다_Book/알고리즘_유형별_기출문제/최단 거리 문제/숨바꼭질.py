@@ -10,7 +10,7 @@ for _ in range(m):
 INF = int(1e9)
 distance = [INF]*(n+1)
 q = []
-heapq.heappush(q, (0, 1))
+heapq.heappush(q, (0, 1)) # heapq 삽입을 통한 정렬
 distance[1] = 0
 while q:
     dist, now = heapq.heappop(q)
