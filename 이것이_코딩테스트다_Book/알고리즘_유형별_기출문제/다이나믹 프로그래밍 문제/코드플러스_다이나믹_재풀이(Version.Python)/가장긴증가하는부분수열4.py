@@ -24,11 +24,13 @@ for i in range(1, n+1):
     # 왜냐하면 꼭 마지막 원소가 최대길이를 가지지 않는다. 따라서 원소중 최대길이를 구해야한다.
 print(mx)
 backtrace(len(dp)-1, mx)
-# lst = []
-# for i in range(n, 0, -1):
-#     if mx == dp[i]:
-#         mx -= 1
-#         lst.append(a[i])
-# lst.reverse()
-# for i in lst:
-#     print(i, end=" ")
+
+# version 반복문 -> backtrace(재귀) 대신 반복문을 통해서도 구현할 수 있다.
+lst = []
+for i in range(n, 0, -1):
+    if mx == dp[i]:
+        mx -= 1
+        lst.append(a[i])
+lst.reverse()
+for i in lst:
+    print(i, end=" ")
