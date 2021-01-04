@@ -22,9 +22,12 @@ def dfs(index):
     if sum(num_list) == n // 2:
         calculate()
     else:
-        num_list[index] = 1
-        dfs(index + 1)
-        num_list[index] = 0
+        for i in range(index, n):
+            if num_list[i]:
+                continue
+            num_list[i] = 1
+            dfs(i + 1)
+            num_list[i] = 0
 
 
 dfs(0)
