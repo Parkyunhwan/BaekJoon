@@ -1,0 +1,15 @@
+n, m = map(int, input().split())
+
+if n == 1:
+    print(1)
+    exit(0)
+elif n == 2:
+    print(min(4, (m - 1) // 2 + 1))
+elif n >= 3:
+    if m <= 6:
+        print(min(4, m))
+        exit(0)
+    else:
+        print(m - 2)
+        exit(0)
+
