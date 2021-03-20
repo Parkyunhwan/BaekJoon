@@ -35,6 +35,7 @@ def bfs(x, y, k):
                 if skill > 0 and statue == 0 and not visited[nx][ny][skill - 1]: # 낮이므로 벽부수고 진행
                     visited[nx][ny][skill - 1] = True
                     q.append((nx, ny, skill - 1, 1, dist + 1))
+                # visited[nx][ny][skill - 1] 을 검사해야만 한다. visited[nx][ny][skill]을 검사하는 것은 의미가 없다.
                 elif skill > 0 and statue == 1 and not visited[nx][ny][skill - 1]: # 현재 밤이므로 낮인 경우를 삽
                     q.append((x, y, skill, 0, dist + 1))
             else: # 벽이 아닐 때
@@ -42,5 +43,5 @@ def bfs(x, y, k):
                 if not visited[nx][ny][skill]: # 벽이 아니므로 바로 진행
                     visited[nx][ny][skill] = True
                     q.append((nx, ny, skill, temp_stat, dist + 1))
-
+    return -1
 print(bfs(0, 0, k))
