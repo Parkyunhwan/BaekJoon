@@ -1,3 +1,11 @@
+'''
+    https://chldkato.tistory.com/54
+    https://rebas.kr/714
+
+    두 방식 모두 좋은 방법이다.
+'''
+
+
 from collections import deque
 
 n = int(input())
