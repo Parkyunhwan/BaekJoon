@@ -17,6 +17,7 @@ def dfs(i, j, bi, bj, char):
         if ni < 0 or ni >= n or nj < 0 or nj >= m or arr[ni][nj] != char:
             continue
         if ni == bi and nj == bj:
+            print(check[ni][nj])
             continue
 
         dfs(ni, nj, i, j, char)
