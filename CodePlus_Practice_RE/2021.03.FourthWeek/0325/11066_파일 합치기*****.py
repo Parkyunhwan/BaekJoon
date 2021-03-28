@@ -9,7 +9,19 @@
 
     다음 번엔 좀더 효율적인 풀이 2를 공부하자.
     https://js1jj2sk3.tistory.com/3
-'''
+
+    풀이 2:
+    가장 넓은 범위 경우부터 따져나가는 방법
+
+    하나의 경우를 -> 왼쪽 최송비용, 오른쪽 최소비용의 합으로 나눠서 가져가는 것
+
+    미드를 기준으로 왼, 오른으로 나눠 재귀적으로 수행함.
+    for (int mid = tx; mid < ty; ++mid) {
+        int left = dpf(tx, mid);
+        int right = dpf(mid + 1, ty);
+        dp[tx][ty] = min(dp[tx][ty], left + right);
+    }
+''
 import sys
 for _ in range(int(input())):
     k = int(input())
