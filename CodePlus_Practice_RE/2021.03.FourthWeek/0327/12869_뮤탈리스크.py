@@ -1,5 +1,9 @@
+'''
+    dp 문제이지만 bfs/dfs 형태로 백트래킹을 이용해서 풀어도 되는문제.
+
+'''
 import sys
-from itertools import combinations
+
 from itertools import permutations
 from collections import deque
 n = int(input())
