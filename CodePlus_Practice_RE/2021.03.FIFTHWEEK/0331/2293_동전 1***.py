@@ -1,6 +1,10 @@
 '''
     풀진 말고 한번 더 이해해보기
     https://sihyungyou.github.io/baekjoon-2293/
+
+    dp[j] = dp[j] + dp[j - arr[i]]
+    arr[i] 값 이전 동전으로 만든 j의 갯수 -> dp[j]
+    arr[i] 값을 포함한 동전으로 만든 j의 갯수 -> dp[j - arr[i]]
 '''
 n, k = map(int, input().split())
 
