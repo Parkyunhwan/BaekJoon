@@ -1,3 +1,25 @@
+# dp 풀이
+n = int(input())
+
+dp = [0] * (n + 1)
+
+if n <= 6:
+    print(n)
+    exit(0)
+
+for i in range(1, 7):
+    dp[i] = i
+
+for i in range(7, n + 1):
+    for j in range(3, n + 1):
+        dp[i] = max((j - 1) * dp[i - j], dp[i])
+
+print(dp[n])
+
+
+
+# 시간초과
+'''
 from collections import deque
 from collections import defaultdict
 n = int(input())
@@ -23,3 +45,4 @@ while q:
 
 
 print(result)
+'''
