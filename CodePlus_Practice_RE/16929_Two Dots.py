@@ -16,8 +16,9 @@ def dfs(i, j, bi, bj, char):
         ni, nj = i + dx[k], j + dy[k]
         if ni < 0 or ni >= n or nj < 0 or nj >= m or arr[ni][nj] != char:
             continue
+
+        # 바로 이전 값을 방문하지 않도록 해줌!!!
         if ni == bi and nj == bj:
-            print(check[ni][nj])
             continue
 
         dfs(ni, nj, i, j, char)
