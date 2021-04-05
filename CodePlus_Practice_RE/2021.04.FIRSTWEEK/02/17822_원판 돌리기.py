@@ -4,7 +4,6 @@ n, m, t = map(int, input().split())
 
 arr = [list(map(int, input().split())) for _ in range(n)]
 
-X, D, K = [], [], []
 # d -> 0 시계, 1 반시
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
