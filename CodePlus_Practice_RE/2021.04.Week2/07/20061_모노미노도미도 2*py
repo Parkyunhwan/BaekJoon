@@ -1,0 +1,168 @@
+N = int(input())
+# 1 : (1, 1), 2 : (1, 2), 3 : (2, 1)
+
+red = [[0] * 4 for _ in range(4)]
+
+blue = [[0] * 6 for _ in range(4)]
+green = [[0] * 4 for _ in range(6)]
+score = 0
+
+
+# 블럭채우기
+def fill_block(t, x, y):
+    if t == 1:
+        j = 0
+        pre = 0
+        while j < 6:
+            if blue[x][j] == 0:
+                pre = j
+                j += 1
+            else:
+                break
+        blue[x][pre] = 1
+
+        i = 0
+        pre = 0
+        while i < 6:
+            if green[i][y] == 0:
+                pre = i
+                i += 1
+            else:
+                break
+        green[pre][y] = 1
+    elif t == 2:
+        j = 0
+        pre = 0
+        while j < 5:
+            if blue[x][j] == 0 and blue[x][j + 1] == 0:
+                pre = j
+                j += 1
+            else:
+                break
+        blue[x][pre] = 1
+        blue[x][pre + 1] = 1
+        i = 0
+        pre = 0
+        while i < 6:
+            if green[i][y] == 0 and green[i][y + 1] == 0:
+                pre = i
+                i += 1
+            else:
+                break
+        green[pre][y] = 1
+        green[pre][y + 1] = 1
+    else:
+        j = 0
+        pre = 0
+        while j < 6:
+            if blue[x][j] == 0 and blue[x + 1][j] == 0:
+                pre = j
+                j += 1
+            else:
+                break
+        blue[x][pre] = 1
+        blue[x + 1][pre] = 1
+
+        i = 0
+        pre = 0
+        while i < 5:
+            if green[i][y] == 0 and green[i + 1][y] == 0:
+                pre = i
+                i += 1
+            else:
+                break
+        green[pre][y] = 1
+        green[pre + 1][y] = 1
+
+# 점수 계산 후 블럭 조
+def cal_score():
+    global score
+    #  blue
+    j = 5
+    while j > 1:
+        count = 0
+        for i in range(4):
+            if blue[i][j] == 1:
+                count += 1
+        if count == 4:
+            score += 1
+            for y in range(j, -1, -1):
+                for x in range(4):
+                    if y == 0:
+                        blue[x][0] = 0
+                    else:
+                        blue[x][y] = blue[x][y - 1]
+        else:
+            j -= 1
+
+    # green
+    i = 5
+    while i > 1:
+        count = 0
+        for j in range(4):
+            if green[i][j] == 1:
+                count += 1
+        if count == 4:
+            score += 1
+            for x in range(i, -1, -1):
+                for y in range(4):
+                    if x == 0:
+                        green[0][y] = 0
+                    else:
+                        green[x][y] = green[x - 1][y]
+        else:
+            i -= 1
+
+# 특수 블럭 처리
+def special_area():
+    # blue
+    count = 0
+    for j in range(2):
+        for i in range(4):
+            if blue[i][j] == 1:
+                count += 1
+                break
+
+    while count != 0:
+        sy = 6 - count
+        while sy != 0:
+            for i in range(4):
+                blue[i][sy] = blue[i][sy - 1]
+            sy -= 1
+        for i in range(4):
+            blue[i][0] = 0
+        count -= 1
+    # red
+    count = 0
+    for i in range(2):
+        for j in range(4):
+            if green[i][j] == 1:
+                count += 1
+                break
+
+    while count != 0:
+        sx = 6 - count
+        while sx != 0:
+            for j in range(4):
+                green[sx][j] = green[sx - 1][j]
+            sx -= 1
+        for j in range(4):
+            green[0][j] = 0
+        count -= 1
+
+
+# solution
+for _ in range(N):
+    t, x, y = map(int, input().split())
+    fill_block(t, x, y)
+    cal_score()
+    special_area()
+
+val = 0
+for row in blue:
+    val += row.count(1)
+
+for row in green:
+    val += row.count(1)
+print(score)
+print(val)
