@@ -1,0 +1,8 @@
+# 요거트와 밀크의 이름을 가진 상품이 한 장바구니에 담겨져 있는 CART_ID 조회
+
+# 우유를 조회해서 나온 CART_ID와 같은 것이 요거트를 조회해서 나온 CART_ID와 같은 것만 출력
+SELECT CART_ID
+FROM CART_PRODUCTS
+WHERE NAME = 'Milk'
+and CART_ID in (SELECT CART_ID from CART_PRODUCTS where NAME = 'Yogurt')
+

@@ -1,3 +1,8 @@
+'''
+    냄새를 너무 빨리 update해서 틀림.
+
+'''
+
 from collections import deque
 import copy
 N, M, k = map(int, input().split())
@@ -10,20 +15,18 @@ shark = [[0, 0, 0] for _ in range(M + 1)]
 
 shark_dir = [0] + list(map(int, input().split()))
 
-prior = [[[0] * 4 for _ in range(4)] for _ in range(4)]
+prior = [[[0] * 4 for _ in range(4)] for _ in range(M)]
 for i in range(M): # 상어 번호
     for dir in range(4): # 위 아래 왼 오
         prior[i][dir] = list(map(int, input().split()))
 
-visited = [[[0, 0] for _ in range(N)] for _ in range(N)] # 상어 번호, 냄새
+visited = [[[0, 0, 0] for _ in range(N)] for _ in range(N)] # 상어 번호, 냄새
 
 for i in range(N):
     for j in range(N):
         if arr[i][j] != 0:
             shark[arr[i][j]] = [i, j, shark_dir[arr[i][j]]]
-            visited[i][j] = [arr[i][j], k]
-print(shark)
-print(prior)
+            visited[i][j] = [arr[i][j], k, False]
 
 
 count = 0
@@ -31,18 +34,13 @@ while True:
     if count == 1001:
         print(-1)
         exit(0)
-    print(count)
-    for row in visited:
-        print(row)
-    print()
-    print(shark)
-    print()
+
     for idx in range(1, len(shark)):
         curr_shark = shark[idx]
         x, y, dir = curr_shark
         if x == -1:
             continue
-        shark_num, curr_remain = visited[x][y]
+        shark_num, curr_remain, my_smell = visited[x][y]
 
         flag = True
         for d in prior[shark_num - 1][dir - 1]:
@@ -51,13 +49,14 @@ while True:
             if nx < 0 or ny < 0 or nx >= N or ny >= N:
                 continue
 
-            s_num, remain = visited[nx][ny]
-            if curr_remain + 1 == remain and shark_num > s_num:
+            s_num, remain, next_smell = visited[nx][ny]
+            if curr_remain + 1 == remain and shark_num > s_num and not next_smell:
                 shark[idx] = [-1, -1, -1]
                 flag = False
                 break
             if remain == 0 or count >= remain:
                 shark[idx] = [nx, ny, d]
+                visited[nx][ny] = [shark_num, curr_remain + 1, False]
                 flag = False
                 break
 
@@ -73,10 +72,10 @@ while True:
                 if visited[nx][ny][0] == shark_num:
                     flag_same = True
                     shark[idx] = [nx, ny, d]
+                    visited[nx][ny] = [shark_num, curr_remain + 1, True]
                     break
         else:
             continue
-        print(flag_same)
         if not flag_same:
             shark[idx] = [-1, -1, -1]
 
@@ -88,12 +87,6 @@ while True:
         if c > 1:
             break
     if c == 1:
-        for row in visited:
-            print(row)
-        print(shark)
-        print("end")
         break
 
 print(count)
-
-
