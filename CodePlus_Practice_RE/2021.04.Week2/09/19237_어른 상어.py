@@ -1,6 +1,7 @@
 '''
     냄새를 너무 빨리 update해서 틀림.
-
+    https://velog.io/@koyo/boj-19237\
+    https://yabmoons.tistory.com/496
 '''
 
 from collections import deque
