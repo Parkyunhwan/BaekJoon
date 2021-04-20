@@ -5,6 +5,7 @@
 
     dp의 값이 줄어드는 시점을 포착하여 스택에 넣어 저장한다.
 '''
+
 arr1 = list(input())
 arr2 = list(input())
 
