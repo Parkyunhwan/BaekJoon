@@ -30,14 +30,14 @@ def calc():
 
     return sm
 
-def dfs(index):
+def dfs(index, X, Y):
     global result
     if index == 3:
         result = min(result, calc())
         return
 
-    for i in range(1, N - 1):
-        for j in range(1, N - 1):
+    for i in range(X, N - 1):
+        for j in range(Y, N - 1):
             flag = True
             for k in range(4):
                 nx, ny = i + dx[k], j + dy[k]
@@ -52,13 +52,15 @@ def dfs(index):
                 nx, ny = i + dx[k], j + dy[k]
                 visited[nx][ny] = True
 
-            dfs(index + 1)
+            dfs(index + 1, X, Y)
 
             visited[i][j] = False
             for k in range(4):
                 nx, ny = i + dx[k], j + dy[k]
                 visited[nx][ny] = False
+            if Y == N - 2:
+                Y = 1
 
-dfs(0)
+dfs(0, 1, 1)
 
 print(result)
