@@ -5,24 +5,21 @@ arr = list(map(int, input().split()))
 
 
 def solve():
-    sumValue = 0
-    minLength = sys.maxsize
-    left, right = 0, 0
+    left = 0
+    right = 0
+    sum_value = 0
+    min_length = sys.maxsize
     while left < N:
-        if sumValue < S:
+        if sum_value < S:
             if right == N:
                 break
-            sumValue += arr[right]
-            print(f'sumValue {sumValue} , arr[right] {arr[right]}')
+            sum_value += arr[right]
             right += 1
-
-        elif sumValue >= S:
-            legnth = right - left
-            minLength = min(minLength, legnth)
-            sumValue -= arr[left]
+        elif sum_value >= S:
+            sum_value -= arr[left]
+            min_length = min(min_length, right - left)
             left += 1
-
-    return minLength
+    return min_length
 
 result = solve()
 if result != sys.maxsize:
